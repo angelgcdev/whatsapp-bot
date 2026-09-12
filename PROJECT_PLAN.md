@@ -72,6 +72,15 @@ Para que un bot de WhatsApp funcione con la infraestructura oficial de Meta, int
 
 ---
 
+## 🎯 Definition of Done (DoD) por Sprint
+Para considerar cualquier historia técnica o Sprint como **TERMINADO**:
+1. **Compilación Limpia:** `npm run build` compila con cero errores.
+2. **Tipado Estricto:** Código y pruebas 100% en inglés con TypeScript estricto.
+3. **Verificación en Vivo:** El hito se valida funcionalmente (en terminal, con curl o en WhatsApp real).
+4. **Commit Semántico Obligatorio:** Se debe realizar un commit en Git (`feat:`, `test:`, etc.) antes de avanzar al siguiente Sprint.
+
+---
+
 ## 📅 Roadmap de Sprints
 
 ---
@@ -80,13 +89,13 @@ Para que un bot de WhatsApp funcione con la infraestructura oficial de Meta, int
 **Objetivo del Sprint:** Configurar la cuenta de desarrollador de Meta, obtener credenciales de prueba de WhatsApp y preparar el entorno de desarrollo local con túnel seguro.
 
 #### Tareas Técnicas:
-- [ ] **TS-0.1:** Crear/configurar App tipo "Other / Business" en [Meta for Developers](https://developers.facebook.com/) y añadir el producto **WhatsApp**.
-- [ ] **TS-0.2:** Obtener credenciales iniciales en el panel de WhatsApp:
+- [x] **TS-0.1:** Crear/configurar App tipo "Other / Business" en [Meta for Developers](https://developers.facebook.com/) y añadir el producto **WhatsApp**.
+- [x] **TS-0.2:** Obtener credenciales iniciales en el panel de WhatsApp:
   - `WHATSAPP_TOKEN` (Token de acceso de prueba).
   - `PHONE_NUMBER_ID` (ID del número de prueba).
   - `VERIFY_TOKEN` (Cadena secreta elegida por nosotros para el handshake).
-- [ ] **TS-0.3:** Inicializar proyecto Backend NestJS con TypeScript estricto.
-- [ ] **TS-0.4:** Instalar y verificar herramienta de túnel local (`ngrok`).
+- [x] **TS-0.3:** Inicializar proyecto Backend NestJS con TypeScript estricto.
+- [x] **TS-0.4:** Instalar y verificar herramienta de túnel local (`ngrok`).
 
 ---
 
@@ -94,9 +103,9 @@ Para que un bot de WhatsApp funcione con la infraestructura oficial de Meta, int
 **Objetivo del Sprint:** Lograr que Meta valide con éxito la URL de nuestro webhook local mediante el endpoint de verificación `GET`.
 
 #### Historias Técnicas:
-- [ ] **TS-1.1 (Configuración de Entorno):** Configurar `@nestjs/config` y archivo `.env` con variables tipadas.
-- [ ] **TS-1.2 (Endpoint de Verificación):** Implementar `GET /webhook` validando `hub.mode === 'subscribe'` y `hub.verify_token === VERIFY_TOKEN`.
-- [ ] **TS-1.3 (Registro en Meta):** Exponer con `ngrok`, ingresar la URL en el panel de Meta y obtener confirmación de suscripción exitosa.
+- [x] **TS-1.1 (Configuración de Entorno):** Configurar `@nestjs/config` y archivo `.env` con variables tipadas.
+- [x] **TS-1.2 (Endpoint de Verificación):** Implementar `GET /webhook` validando `hub.mode === 'subscribe'` y `hub.verify_token === VERIFY_TOKEN`.
+- [x] **TS-1.3 (Registro en Meta):** Exponer con `ngrok`, ingresar la URL en el panel de Meta y obtener confirmación de suscripción exitosa.
 
 ---
 
@@ -156,9 +165,11 @@ Para que un bot de WhatsApp funcione con la infraestructura oficial de Meta, int
 
 | Sprint | Enfoque Principal | Estado |
 | :--- | :--- | :--- |
-| **Sprint 0** | Setup de Entorno, Cuenta Meta for Developers & Túnel | 🟡 En Curso |
-| **Sprint 1** | Handshake y Verificación del Webhook (`GET /webhook`) | ⚪ Por Iniciar |
-| **Sprint 2** | Recepción de Mensajes Entrantes (`POST /webhook`) | ⚪ Por Iniciar |
+| **Sprint 0** | Setup de Entorno, Cuenta Meta for Developers & Túnel | 🟢 Completado |
+| **Sprint 1** | Handshake y Verificación del Webhook (`GET /webhook`) | 🟢 Completado |
+| **Sprint 2** | Recepción de Mensajes Entrantes (`POST /webhook`) | 🟡 En Curso |
 | **Sprint 3** | Envío de Mensajes con Graph API (Echo Bot Funcional) | ⚪ Por Iniciar |
 | **Sprint 4** | Lógica de Comandos y Arquitectura Limpia | ⚪ Por Iniciar |
 | **Sprint 5** | Pruebas Unitarias y E2E con Mocks | ⚪ Por Iniciar |
+
+
