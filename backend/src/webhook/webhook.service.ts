@@ -1,12 +1,16 @@
 import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { WhatsAppPayload } from './interfaces/whatsapp-payload.interface';
+import { WhatsappService } from 'src/whatsapp/whatsapp.service';
 
 @Injectable()
 export class WebhookService {
   private readonly logger = new Logger(WebhookService.name);
 
-  constructor(private readonly configService: ConfigService) {}
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly whatsappService: WhatsappService,
+  ) {}
 
   verifyWebhook(mode: string, token: string, challenge: string): string {
     const verifyToken = this.configService.get<string>('WHATSAPP_VERIFY_TOKEN');
@@ -18,7 +22,7 @@ export class WebhookService {
     throw new ForbiddenException('Invalid verify token or mode');
   }
 
-  handleIncoming(payload: WhatsAppPayload): string {
+  async handleIncoming(payload: WhatsAppPayload): Promise<string> {
     const entry = payload.entry?.[0];
     const change = entry?.changes?.[0];
     const value = change?.value;
@@ -30,6 +34,16 @@ export class WebhookService {
       const text = message.text?.body;
 
       this.logger.log(`💬 Text message received from ${from}: "${text}"`);
+
+      // 🤖 Respondemos con el Eco al usuario
+      try {
+        await this.whatsappService.sendTextMessage(from, `🤖 Eco: ${text}`);
+      } catch (error) {
+        this.logger.error(
+          `Failed to send echo message to ${from}`,
+          error instanceof Error ? error.stack : String(error),
+        );
+      }
     } else if (value?.statuses?.[0]) {
       // Meta también notifica estados de entrega: "sent", "delivered", "read"
       this.logger.debug(

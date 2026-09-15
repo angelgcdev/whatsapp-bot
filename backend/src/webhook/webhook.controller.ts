@@ -37,7 +37,7 @@ export class WebhookController {
 
   @Post()
   @HttpCode(HttpStatus.OK)
-  handleIncoming(@Body() payload: WhatsAppPayload): string {
+  async handleIncoming(@Body() payload: WhatsAppPayload): Promise<string> {
     this.logger.log('📩 Incoming webhook event received');
     return this.webhookService.handleIncoming(payload);
   }

@@ -56,7 +56,7 @@ Para que un bot de WhatsApp funcione con la infraestructura oficial de Meta, int
 
 ## 🛠️ Stack Tecnológico
 * **Backend:** NestJS 11+ (TypeScript estricto, Módulos, Controladores, Servicios, DTOs con `class-validator`).
-* **HTTP Client:** `@nestjs/axios` (Axios) para comunicación saliente con Meta Graph API.
+* **HTTP Client:** API nativa `fetch` (Node.js 18+) para comunicación saliente con Meta Graph API (sin dependencias externas).
 * **Configuración:** `@nestjs/config` con variables de entorno (`.env`) seguras.
 * **Túnel de Desarrollo:** `ngrok` (para exponer el webhook en desarrollo local).
 * **Testing:** Jest y Supertest (E2E y pruebas unitarias con tipado estricto).
@@ -126,9 +126,9 @@ Para considerar cualquier historia técnica o Sprint como **TERMINADO**:
 **Objetivo del Sprint:** Conectar nuestro backend con la Graph API de Meta para responderle al usuario en WhatsApp con un mensaje de eco ("Tú dijiste: ...").
 
 #### Historias de Usuario / Técnicas:
-- [ ] **TS-3.1 (Servicio WhatsApp API):** Crear servicio HTTP con `@nestjs/axios` para ejecutar peticiones `POST` a `https://graph.facebook.com/v22.0/{PHONE_NUMBER_ID}/messages`.
-- [ ] **US-3.2 (Echo Bot):** Cuando el usuario escriba cualquier texto al bot, el bot responderá automáticamente: `"🤖 Eco: <mensaje_recibido>"`.
-- [ ] **TS-3.3 (Validación en Vivo):** Enviar un mensaje desde un teléfono real de WhatsApp al número de prueba de Meta y verificar la respuesta automática inmediata.
+- [x] **TS-3.1 (Servicio WhatsApp API):** Crear servicio WhatsApp con API nativa `fetch` para ejecutar peticiones `POST` a `https://graph.facebook.com/v22.0/{PHONE_NUMBER_ID}/messages`.
+- [x] **US-3.2 (Echo Bot):** Cuando el usuario escriba cualquier texto al bot, el bot responderá automáticamente: `"🤖 Eco: <mensaje_recibido>"`.
+- [x] **TS-3.3 (Validación en Vivo):** Enviar un mensaje desde un teléfono real de WhatsApp al número de prueba de Meta y verificar la respuesta automática inmediata.
 
 ---
 
@@ -168,7 +168,7 @@ Para considerar cualquier historia técnica o Sprint como **TERMINADO**:
 | **Sprint 0** | Setup de Entorno, Cuenta Meta for Developers & Túnel | 🟢 Completado |
 | **Sprint 1** | Handshake y Verificación del Webhook (`GET /webhook`) | 🟢 Completado |
 | **Sprint 2** | Recepción de Mensajes Entrantes (`POST /webhook`) | 🟢 Completado |
-| **Sprint 3** | Envío de Mensajes con Graph API (Echo Bot Funcional) | ⚪ Por Iniciar |
+| **Sprint 3** | Envío de Mensajes con Graph API (Echo Bot Funcional) | 🟢 Completado |
 | **Sprint 4** | Lógica de Comandos y Arquitectura Limpia | ⚪ Por Iniciar |
 | **Sprint 5** | Pruebas Unitarias y E2E con Mocks | ⚪ Por Iniciar |
 
