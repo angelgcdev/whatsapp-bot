@@ -1,5 +1,15 @@
-import { Controller, Get, Query, Logger } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Query,
+  Logger,
+  Post,
+  HttpCode,
+  HttpStatus,
+  Body,
+} from '@nestjs/common';
 import { WebhookService } from './webhook.service';
+import type { WhatsAppPayload } from './interfaces/whatsapp-payload.interface';
 
 @Controller('webhook')
 export class WebhookController {
@@ -23,5 +33,12 @@ export class WebhookController {
       '✅ Handshake verification successful! Returning challenge.',
     );
     return result;
+  }
+
+  @Post()
+  @HttpCode(HttpStatus.OK)
+  handleIncoming(@Body() payload: WhatsAppPayload): string {
+    this.logger.log('📩 Incoming webhook event received');
+    return this.webhookService.handleIncoming(payload);
   }
 }

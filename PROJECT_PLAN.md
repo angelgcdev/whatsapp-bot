@@ -113,8 +113,8 @@ Para considerar cualquier historia técnica o Sprint como **TERMINADO**:
 **Objetivo del Sprint:** Recibir los mensajes enviados por el usuario desde WhatsApp en tiempo real, parsear el payload de Meta y extraer el remitente y texto.
 
 #### Historias de Usuario / Técnicas:
-- [ ] **US-2.1 (Recepción de Eventos):** Recibir eventos de Meta, devolver inmediatamente HTTP `200 OK` (requerido por Meta para evitar reintentos) y procesar de forma asíncrona.
-- [ ] **TS-2.2 (Payload Parser):** Extraer con seguridad la información relevante:
+- [x] **US-2.1 (Recepción de Eventos):** Recibir eventos de Meta, devolver inmediatamente HTTP `200 OK` (requerido por Meta para evitar reintentos) y procesar de forma asíncrona.
+- [x] **TS-2.2 (Payload Parser):** Extraer con seguridad la información relevante:
   - Número de teléfono del remitente (`from`).
   - Tipo de mensaje (`type === 'text'`).
   - Contenido del mensaje (`text.body`).
@@ -167,7 +167,7 @@ Para considerar cualquier historia técnica o Sprint como **TERMINADO**:
 | :--- | :--- | :--- |
 | **Sprint 0** | Setup de Entorno, Cuenta Meta for Developers & Túnel | 🟢 Completado |
 | **Sprint 1** | Handshake y Verificación del Webhook (`GET /webhook`) | 🟢 Completado |
-| **Sprint 2** | Recepción de Mensajes Entrantes (`POST /webhook`) | 🟡 En Curso |
+| **Sprint 2** | Recepción de Mensajes Entrantes (`POST /webhook`) | 🟢 Completado |
 | **Sprint 3** | Envío de Mensajes con Graph API (Echo Bot Funcional) | ⚪ Por Iniciar |
 | **Sprint 4** | Lógica de Comandos y Arquitectura Limpia | ⚪ Por Iniciar |
 | **Sprint 5** | Pruebas Unitarias y E2E con Mocks | ⚪ Por Iniciar |

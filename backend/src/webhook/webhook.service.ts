@@ -1,8 +1,11 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { WhatsAppPayload } from './interfaces/whatsapp-payload.interface';
 
 @Injectable()
 export class WebhookService {
+  private readonly logger = new Logger(WebhookService.name);
+
   constructor(private readonly configService: ConfigService) {}
 
   verifyWebhook(mode: string, token: string, challenge: string): string {
@@ -13,5 +16,32 @@ export class WebhookService {
     }
 
     throw new ForbiddenException('Invalid verify token or mode');
+  }
+
+  handleIncoming(payload: WhatsAppPayload): string {
+    const entry = payload.entry?.[0];
+    const change = entry?.changes?.[0];
+    const value = change?.value;
+    const message = value?.messages?.[0];
+
+    // Verificamos si realmente llegó un mensaje de texto
+    if (message && message.type === 'text') {
+      const from = message.from;
+      const text = message.text?.body;
+
+      this.logger.log(`💬 Text message received from ${from}: "${text}"`);
+    } else if (value?.statuses?.[0]) {
+      // Meta también notifica estados de entrega: "sent", "delivered", "read"
+      this.logger.debug(
+        `ℹ️ Status update received: ${value.statuses[0].status}`,
+      );
+    } else {
+      this.logger.warn(
+        '⚠️ Webhook event received without recognizable message or status',
+      );
+    }
+
+    // Meta siempre requiere que respondamos con éxito para no reintentar
+    return 'EVENT_RECEIVED';
   }
 }
