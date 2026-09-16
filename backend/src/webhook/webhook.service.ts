@@ -2,6 +2,7 @@ import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { WhatsAppPayload } from './interfaces/whatsapp-payload.interface';
 import { WhatsappService } from 'src/whatsapp/whatsapp.service';
+import { BotService } from 'src/bot/bot.service';
 
 @Injectable()
 export class WebhookService {
@@ -10,6 +11,7 @@ export class WebhookService {
   constructor(
     private readonly configService: ConfigService,
     private readonly whatsappService: WhatsappService,
+    private readonly botService: BotService,
   ) {}
 
   verifyWebhook(mode: string, token: string, challenge: string): string {
@@ -29,15 +31,16 @@ export class WebhookService {
     const message = value?.messages?.[0];
 
     // Verificamos si realmente llegó un mensaje de texto
-    if (message && message.type === 'text') {
+    if (message && message.type === 'text' && message.text?.body) {
       const from = message.from;
-      const text = message.text?.body;
+      const text = message.text.body;
 
       this.logger.log(`💬 Text message received from ${from}: "${text}"`);
 
       // 🤖 Respondemos con el Eco al usuario
       try {
-        await this.whatsappService.sendTextMessage(from, `🤖 Eco: ${text}`);
+        const replyText = this.botService.processMessage(text);
+        await this.whatsappService.sendTextMessage(from, replyText);
       } catch (error) {
         this.logger.error(
           `Failed to send echo message to ${from}`,

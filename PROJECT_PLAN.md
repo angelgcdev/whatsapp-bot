@@ -136,9 +136,9 @@ Para considerar cualquier historia técnica o Sprint como **TERMINADO**:
 **Objetivo del Sprint:** Estructurar una arquitectura limpia para procesar diferentes comandos de texto y estructurar respuestas interactivas.
 
 #### Historias de Usuario:
-- [ ] **US-4.1 (Comando Ayuda / Menú):** Responder con una lista de opciones al recibir `"hola"`, `"menu"` o `"ayuda"`.
-- [ ] **US-4.2 (Manejo de Fallback):** Responder con un mensaje de orientación amigable cuando el mensaje no coincida con ningún comando conocido.
-- [ ] **TS-4.3 (Arquitectura de Servicios):** Separar `WebhookController` (recibe la petición), `WebhookService` (valida y rutea) y `BotLogicService` (decide qué responder).
+- [x] **US-4.1 (Comando Ayuda / Menú):** Responder con una lista de opciones al recibir `"hola"`, `"menu"` o `"ayuda"`.
+- [x] **US-4.2 (Manejo de Fallback):** Responder con un mensaje de orientación amigable cuando el mensaje no coincida con ningún comando conocido.
+- [x] **TS-4.3 (Arquitectura de Servicios):** Separar `WebhookController` (recibe la petición), `WebhookService` (valida y rutea) y `BotLogicService` (decide qué responder).
 
 ---
 
@@ -169,7 +169,7 @@ Para considerar cualquier historia técnica o Sprint como **TERMINADO**:
 | **Sprint 1** | Handshake y Verificación del Webhook (`GET /webhook`) | 🟢 Completado |
 | **Sprint 2** | Recepción de Mensajes Entrantes (`POST /webhook`) | 🟢 Completado |
 | **Sprint 3** | Envío de Mensajes con Graph API (Echo Bot Funcional) | 🟢 Completado |
-| **Sprint 4** | Lógica de Comandos y Arquitectura Limpia | ⚪ Por Iniciar |
+| **Sprint 4** | Lógica de Comandos y Arquitectura Limpia | 🟢 Completado |
 | **Sprint 5** | Pruebas Unitarias y E2E con Mocks | ⚪ Por Iniciar |
 
 
