@@ -146,9 +146,9 @@ Para considerar cualquier historia técnica o Sprint como **TERMINADO**:
 **Objetivo del Sprint:** Garantizar que el webhook y el servicio de mensajería cuenten con pruebas unitarias y de integración, mockeando la API de Meta.
 
 #### Historias Técnicas:
-- [ ] **TS-5.1:** Pruebas unitarias de `WebhookController` y verificación del handshake.
-- [ ] **TS-5.2:** Pruebas unitarias de `WhatsAppService` mockeando llamadas HTTP salientes.
-- [ ] **TS-5.3:** Pruebas E2E de simulación de webhook entrante con Supertest.
+- [x] **TS-5.1:** Pruebas unitarias de `WebhookController` y verificación del handshake.
+- [x] **TS-5.2:** Pruebas unitarias de `WhatsAppService` mockeando llamadas HTTP salientes.
+- [x] **TS-5.3:** Pruebas E2E de simulación de webhook entrante con Supertest.
 
 ---
 
@@ -170,6 +170,6 @@ Para considerar cualquier historia técnica o Sprint como **TERMINADO**:
 | **Sprint 2** | Recepción de Mensajes Entrantes (`POST /webhook`) | 🟢 Completado |
 | **Sprint 3** | Envío de Mensajes con Graph API (Echo Bot Funcional) | 🟢 Completado |
 | **Sprint 4** | Lógica de Comandos y Arquitectura Limpia | 🟢 Completado |
-| **Sprint 5** | Pruebas Unitarias y E2E con Mocks | ⚪ Por Iniciar |
+| **Sprint 5** | Pruebas Unitarias y E2E con Mocks | 🟢 Completado |
 
 

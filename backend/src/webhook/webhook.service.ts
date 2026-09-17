@@ -1,8 +1,8 @@
 import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { WhatsAppPayload } from './interfaces/whatsapp-payload.interface';
-import { WhatsappService } from 'src/whatsapp/whatsapp.service';
-import { BotService } from 'src/bot/bot.service';
+import { WhatsappService } from '../whatsapp/whatsapp.service';
+import { BotService } from '../bot/bot.service';
 
 @Injectable()
 export class WebhookService {

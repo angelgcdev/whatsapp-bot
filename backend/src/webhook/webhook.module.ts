@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { WebhookService } from './webhook.service';
 import { WebhookController } from './webhook.controller';
-import { WhatsappModule } from 'src/whatsapp/whatsapp.module';
-import { BotModule } from 'src/bot/bot.module';
+import { WhatsappModule } from '../whatsapp/whatsapp.module';
+import { BotModule } from '../bot/bot.module';
 
 @Module({
   imports: [WhatsappModule, BotModule],
