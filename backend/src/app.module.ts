@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { WebhookModule } from './webhook/webhook.module';
 import { WhatsappModule } from './whatsapp/whatsapp.module';
 import { BotModule } from './bot/bot.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { BotModule } from './bot/bot.module';
     WebhookModule,
     WhatsappModule,
     BotModule,
+    PrismaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
