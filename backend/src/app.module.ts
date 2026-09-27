@@ -6,6 +6,7 @@ import { WebhookModule } from './webhook/webhook.module';
 import { WhatsappModule } from './whatsapp/whatsapp.module';
 import { BotModule } from './bot/bot.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { BotResponsesModule } from './bot-responses/bot-responses.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { PrismaModule } from './prisma/prisma.module';
     WhatsappModule,
     BotModule,
     PrismaModule,
+    BotResponsesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

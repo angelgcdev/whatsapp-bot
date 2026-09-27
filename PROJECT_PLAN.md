@@ -195,10 +195,10 @@ Para considerar cualquier historia técnica o Sprint como **TERMINADO**:
 
 #### Historias de Usuario / Técnicas:
 
-- [ ] **TS-7.1 (Generación de Módulo):** Crear módulo `BotResponsesModule` (`controller`, `service`).
-- [ ] **TS-7.2 (DTOs con Validación):** Implementar `CreateBotResponseDto` y `UpdateBotResponseDto` con validaciones de campos requeridos y tipos.
-- [ ] **TS-7.3 (Endpoints CRUD):** Implementar `GET /bot-responses`, `POST /bot-responses`, `PATCH /bot-responses/:id` y `DELETE /bot-responses/:id`.
-- [ ] **TS-7.4 (Habilitación de CORS & Pruebas):** Habilitar CORS en `main.ts` y crear pruebas unitarias para el controlador y servicio de respuestas.
+- [x] **TS-7.1 (Generación de Módulo):** Crear módulo `BotResponsesModule` (`controller`, `service`).
+- [x] **TS-7.2 (DTOs con Validación):** Implementar `CreateBotResponseDto` y `UpdateBotResponseDto` con validaciones de campos requeridos y tipos.
+- [x] **TS-7.3 (Endpoints CRUD):** Implementar `GET /bot-responses`, `POST /bot-responses`, `PATCH /bot-responses/:id` y `DELETE /bot-responses/:id`.
+- [x] **TS-7.4 (Habilitación de CORS & Pruebas):** Habilitar CORS en `main.ts` y crear pruebas unitarias para el controlador y servicio de respuestas.
 
 ---
 
@@ -263,7 +263,7 @@ Para considerar cualquier historia técnica o Sprint como **TERMINADO**:
 | **Sprint 4**  | Lógica de Comandos y Arquitectura Limpia              | 🟢 Completado  |
 | **Sprint 5**  | Pruebas Unitarias y E2E con Mocks                     | 🟢 Completado  |
 | **Sprint 6**  | Persistencia y Modelo Prisma 7 + SQLite en Backend    | 🟢 Completado  |
-| **Sprint 7**  | API REST de Gestión de Respuestas (`/bot-responses`)  | ⚪ Por Iniciar |
+| **Sprint 7**  | API REST de Gestión de Respuestas (`/bot-responses`)  | 🟢 Completado  |
 | **Sprint 8**  | Conexión Dinámica de `BotService` con Base de Datos   | ⚪ Por Iniciar |
 | **Sprint 9**  | Frontend Angular - Gestión de Respuestas con Tailwind | ⚪ Por Iniciar |
 | **Sprint 10** | Validación Integral End-to-End (UI ➔ WhatsApp)        | ⚪ Por Iniciar |
