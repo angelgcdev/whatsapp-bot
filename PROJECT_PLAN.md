@@ -208,10 +208,10 @@ Para considerar cualquier historia técnica o Sprint como **TERMINADO**:
 
 #### Historias Técnicas:
 
-- [ ] **TS-8.1 (Inyección de Dependencias):** Inyectar `PrismaService` en `BotService` y convertir `processMessage` a método asíncrono.
-- [ ] **TS-8.2 (Búsqueda de Comandos):** Consultar en SQLite la palabra clave normalizada (`keyword`) con estado `isActive = true`.
-- [ ] **TS-8.3 (Fallback Dinámico):** Obtener mensaje de fallback configurado en BD si el comando no coincide.
-- [ ] **TS-8.4 (Actualización de Tests):** Adaptar `bot.service.spec.ts` y `webhook.service.spec.ts` mockeando el acceso a Prisma.
+- [x] **TS-8.1 (Inyección de Dependencias):** Inyectar `PrismaService` en `BotService` y convertir `processMessage` a método asíncrono.
+- [x] **TS-8.2 (Búsqueda de Comandos):** Consultar en SQLite la palabra clave normalizada (`keyword`) con estado `isActive = true`.
+- [x] **TS-8.3 (Fallback Dinámico):** Obtener mensaje de fallback configurado en BD si el comando no coincide.
+- [x] **TS-8.4 (Actualización de Tests):** Adaptar `bot.service.spec.ts` y `webhook.service.spec.ts` mockeando el acceso a Prisma.
 
 ---
 
@@ -264,6 +264,6 @@ Para considerar cualquier historia técnica o Sprint como **TERMINADO**:
 | **Sprint 5**  | Pruebas Unitarias y E2E con Mocks                     | 🟢 Completado  |
 | **Sprint 6**  | Persistencia y Modelo Prisma 7 + SQLite en Backend    | 🟢 Completado  |
 | **Sprint 7**  | API REST de Gestión de Respuestas (`/bot-responses`)  | 🟢 Completado  |
-| **Sprint 8**  | Conexión Dinámica de `BotService` con Base de Datos   | ⚪ Por Iniciar |
+| **Sprint 8**  | Conexión Dinámica de `BotService` con Base de Datos   | 🟢 Completado  |
 | **Sprint 9**  | Frontend Angular - Gestión de Respuestas con Tailwind | ⚪ Por Iniciar |
 | **Sprint 10** | Validación Integral End-to-End (UI ➔ WhatsApp)        | ⚪ Por Iniciar |

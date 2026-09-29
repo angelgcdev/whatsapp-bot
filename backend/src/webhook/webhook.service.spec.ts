@@ -74,6 +74,7 @@ describe('WebhookService', () => {
   });
 
   describe('handleIncoming', () => {
+    // Arrange
     it('should process text message and send reply via WhatsappService', async () => {
       const payload: WhatsAppPayload = {
         entry: [
@@ -96,15 +97,17 @@ describe('WebhookService', () => {
       };
 
       const reply = '👋 ¡Hola! Bienvenido a nuestro asistente virtual.';
-      botService.processMessage.mockReturnValue(reply);
+      botService.processMessage.mockResolvedValue(reply);
       whatsappService.sendTextMessage.mockResolvedValue({
         messaging_product: 'whatsapp',
         contacts: [{ input: '123456789', wa_id: '123456789' }],
         messages: [{ id: 'wamid.HBgL' }],
       });
 
+      // Act
       const result = await service.handleIncoming(payload);
 
+      // Assert
       expect(botService.processMessage).toHaveBeenCalledWith('hola');
       expect(whatsappService.sendTextMessage).toHaveBeenCalledWith(
         '123456789',
@@ -135,6 +138,7 @@ describe('WebhookService', () => {
     });
 
     it('should not throw if whatsappService fails to send message', async () => {
+      // Arrange
       const payload: WhatsAppPayload = {
         entry: [
           {
@@ -155,13 +159,15 @@ describe('WebhookService', () => {
         ],
       };
 
-      botService.processMessage.mockReturnValue('Some reply');
+      botService.processMessage.mockResolvedValue('Some reply');
       whatsappService.sendTextMessage.mockRejectedValue(
         new Error('Network error'),
       );
 
+      // Act
       const result = await service.handleIncoming(payload);
 
+      // Assert
       expect(result).toBe('EVENT_RECEIVED');
     });
   });

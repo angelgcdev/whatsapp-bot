@@ -39,7 +39,7 @@ export class WebhookService {
 
       // 🤖 Respondemos con el Eco al usuario
       try {
-        const replyText = this.botService.processMessage(text);
+        const replyText = await this.botService.processMessage(text);
         await this.whatsappService.sendTextMessage(from, replyText);
       } catch (error) {
         this.logger.error(
