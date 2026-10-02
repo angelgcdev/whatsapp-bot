@@ -1,0 +1,97 @@
+<section
+  class="mt-8 p-6 sm:p-8 bg-surface-container-lowest rounded-3xl border border-outline-variant/40 shadow-[0_8px_24px_-4px_rgba(27,59,43,0.06)]"
+>
+  <h2 class="text-xl font-bold text-on-surface mb-6 flex items-center gap-2.5">
+    @if (initialData() !== null) {
+      <div
+        class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary-container"
+      >
+        <svg lucidePencil class="w-4 h-4"></svg>
+      </div>
+      <span>Edit Bot Response</span>
+    } @else {
+      <div
+        class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary-container"
+      >
+        <svg lucidePlus class="w-4 h-4 stroke-[3]"></svg>
+      </div>
+      <span>Create New Bot Response</span>
+    }
+  </h2>
+
+  <form [formGroup]="form" (ngSubmit)="submitForm()" class="space-y-5">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <!-- Keyword Field -->
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-on-surface mb-2">
+          Trigger Keyword
+        </label>
+        <input
+          type="text"
+          formControlName="keyword"
+          placeholder="e.g. horario, precio, soporte"
+          class="w-full px-5 py-3 bg-surface border border-outline-variant/60 rounded-full text-on-surface text-sm font-medium placeholder-outline focus:bg-surface-container-lowest focus:outline-none focus:border-primary-container focus:ring-4 focus:ring-primary-container/15 transition-all"
+        />
+        @if (form.get('keyword')?.touched && form.get('keyword')?.invalid) {
+          <p class="text-xs font-semibold text-error mt-1.5 ml-4">
+            Keyword is required (min 2 characters).
+          </p>
+        }
+      </div>
+
+      <!-- Active Toggle -->
+      <div class="flex items-center gap-3 md:pt-7">
+        <input
+          type="checkbox"
+          id="isActive"
+          formControlName="isActive"
+          class="h-5 w-5 rounded-md border-outline-variant/60 bg-surface text-primary-container focus:ring-primary-container cursor-pointer"
+        />
+        <label
+          for="isActive"
+          class="text-sm font-semibold text-on-surface cursor-pointer select-none"
+        >
+          Active Trigger (Bot will respond to this keyword)
+        </label>
+      </div>
+    </div>
+
+    <!-- Response Content Field -->
+    <div>
+      <label class="block text-xs font-bold uppercase tracking-wider text-on-surface mb-2">
+        Bot Response Text
+      </label>
+      <textarea
+        formControlName="response"
+        rows="3"
+        placeholder="Write the message WhatsApp users will receive..."
+        class="w-full p-4 bg-surface border border-outline-variant/60 rounded-2xl text-on-surface text-sm font-medium placeholder-outline focus:bg-surface-container-lowest focus:outline-none focus:border-primary-container focus:ring-4 focus:ring-primary-container/15 transition-all"
+      ></textarea>
+      @if (form.get('response')?.touched && form.get('response')?.invalid) {
+        <p class="text-xs font-semibold text-error mt-1.5 ml-4">Response text cannot be empty.</p>
+      }
+    </div>
+
+    <!-- Form Actions -->
+    <div class="flex items-center justify-end gap-3 pt-3">
+      <button
+        type="button"
+        (click)="cancel.emit()"
+        class="inline-flex items-center gap-1.5 px-6 py-2.5 text-sm font-bold text-on-secondary-container hover:text-on-surface bg-secondary-container/40 hover:bg-secondary-container rounded-full transition-all cursor-pointer"
+      >
+        <svg lucideX class="w-4 h-4"></svg>
+        <span>Cancel</span>
+      </button>
+      <button
+        type="submit"
+        [disabled]="isSaving()"
+        class="inline-flex items-center gap-2 px-7 py-2.5 text-sm font-bold bg-primary-container hover:bg-[#5eb028] disabled:opacity-50 text-white rounded-full transition-all shadow-[0_10px_20px_-3px_rgba(108,197,50,0.38)] cursor-pointer"
+      >
+        <svg lucideSave class="w-4 h-4"></svg>
+        <span>{{
+          isSaving() ? 'Saving...' : initialData() !== null ? 'Save Changes' : 'Create Response'
+        }}</span>
+      </button>
+    </div>
+  </form>
+</section>

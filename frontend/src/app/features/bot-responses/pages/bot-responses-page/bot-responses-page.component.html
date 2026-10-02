@@ -1,0 +1,65 @@
+<div class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+  <!-- Header -->
+  <header
+    class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-8 border-b border-outline-variant/40"
+  >
+    <div class="flex items-center gap-4">
+      <div
+        class="w-12 h-12 rounded-2xl bg-surface-container-lowest shadow-[0_8px_20px_-4px_rgba(27,59,43,0.08)] border border-outline-variant/40 flex items-center justify-center text-primary-container"
+      >
+        <svg lucideBot class="w-7 h-7"></svg>
+      </div>
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-on-background">
+          WhatsApp Bot Responses
+        </h1>
+        <p class="text-on-surface-variant mt-0.5 text-sm font-medium">
+          Manage dynamic keywords, automated replies, and active bot triggers.
+        </p>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <!-- Dark/Light Theme Toggle -->
+      <button
+        (click)="themeService.toggleTheme()"
+        title="Toggle Light / Dark mode"
+        class="w-11 h-11 rounded-full bg-surface-container-lowest border border-outline-variant/50 text-on-surface hover:text-primary-container flex items-center justify-center transition-all shadow-sm cursor-pointer"
+      >
+        @if (themeService.isDarkMode()) {
+          <svg lucideSun class="w-5 h-5 text-primary-container"></svg>
+        } @else {
+          <svg lucideMoon class="w-5 h-5 text-secondary"></svg>
+        }
+      </button>
+
+      <!-- New Response CTA -->
+      <button
+        (click)="openCreate()"
+        class="inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-bold bg-primary-container hover:bg-[#5eb028] text-white rounded-full transition-all shadow-[0_10px_20px_-3px_rgba(108,197,50,0.38)] hover:shadow-[0_12px_24px_-3px_rgba(108,197,50,0.48)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+      >
+        <svg lucidePlus class="w-4 h-4 stroke-[3]"></svg>
+        <span>New Response</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Create / Edit Form Component -->
+  @if (isFormOpen()) {
+    <app-bot-response-form
+      [initialData]="selectedResponse()"
+      [isSaving]="isSaving()"
+      (save)="onSaveResponse($event)"
+      (cancel)="cancelForm()"
+    />
+  }
+
+  <!-- Responses Table Component -->
+  <app-bot-response-table
+    [responses]="responses()"
+    [isLoading]="isLoading()"
+    [errorMessage]="errorMessage()"
+    (edit)="openEdit($event)"
+    (delete)="onDeleteResponse($event)"
+    (retry)="loadResponses()"
+  />
+</div>

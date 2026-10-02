@@ -1,3 +1,70 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+  /* Surface & Canvas (Light) */
+  --color-surface: #f5fbf7;
+  --color-surface-dim: #d5dbd8;
+  --color-surface-bright: #f5fbf7;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #eff5f1;
+  --color-surface-container: #e9efeb;
+  --color-surface-container-high: #e3eae6;
+  --color-surface-container-highest: #dee4e0;
+  --color-on-surface: #171d1b;
+  --color-on-surface-variant: #404a38;
+  --color-outline: #707a66;
+  --color-outline-variant: #c0cab3;
+
+  /* Primary Brand */
+  --color-primary: #2f6c00;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #6cc532;
+  --color-on-primary-container: #204d00;
+  --color-inverse-primary: #82dd48;
+
+  /* Secondary */
+  --color-secondary: #456553;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #c4e8d1;
+  --color-on-secondary-container: #496a57;
+
+  /* Tertiary */
+  --color-tertiary: #006d36;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #40c772;
+  --color-on-tertiary-container: #004e24;
+
+  /* Error Feedback */
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  /* Background */
+  --color-background: #f5fbf7;
+  --color-on-background: #171d1b;
+}
+
+/* 🌙 Botanical Night (Dark Mode) */
+.dark {
+  --color-background: #0d1410;
+  --color-surface: #131c17;
+  --color-surface-container-lowest: #18241e;
+  --color-surface-container-low: #1d2a23;
+  --color-surface-container: #223129;
+  --color-surface-container-high: #27382f;
+  --color-on-background: #ecf2ee;
+  --color-on-surface: #ecf2ee;
+  --color-on-surface-variant: #a3b5aa;
+  --color-outline: #89998e;
+  --color-outline-variant: #283a30;
+  --color-primary-container: #5eb028;
+  --color-on-primary-container: #ffffff;
+  --color-secondary-container: #22382c;
+  --color-on-secondary-container: #c4e8d1;
+  --color-tertiary: #5bdf87;
+  --color-error-container: #540004;
+  --color-on-error-container: #ffdad6;
+}

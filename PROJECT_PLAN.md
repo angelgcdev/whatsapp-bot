@@ -221,11 +221,11 @@ Para considerar cualquier historia técnica o Sprint como **TERMINADO**:
 
 #### Historias Técnicas / UI:
 
-- [ ] **TS-9.1 (Configuración HTTP):** Configurar `provideHttpClient()` en `app.config.ts`.
-- [ ] **TS-9.2 (Servicio Angular):** Crear `BotResponsesService` consumiendo la API de NestJS con tipado estricto.
-- [ ] **TS-9.3 (Vista de Listado):** Diseñar tabla o tarjetas con Tailwind CSS para mostrar comandos, respuestas y estado activo.
-- [ ] **TS-9.4 (Formulario Reactivo):** Crear formulario con `ReactiveFormsModule` para crear y editar respuestas con validación visual.
-- [ ] **TS-9.5 (Eliminación con Confirmación):** Implementar eliminación reactiva de respuestas con actualización en vivo de la lista.
+- [x] **TS-9.1 (Configuración HTTP):** Configurar `provideHttpClient()` en `app.config.ts`.
+- [x] **TS-9.2 (Servicio Angular):** Crear `BotResponsesService` consumiendo la API de NestJS con tipado estricto.
+- [x] **TS-9.3 (Vista de Listado):** Diseñar tabla o tarjetas con Tailwind CSS para mostrar comandos, respuestas y estado activo.
+- [x] **TS-9.4 (Formulario Reactivo):** Crear formulario con `ReactiveFormsModule` para crear y editar respuestas con validación visual.
+- [x] **TS-9.5 (Eliminación con Confirmación):** Implementar eliminación reactiva de respuestas con actualización en vivo de la lista.
 
 ---
 
@@ -265,5 +265,5 @@ Para considerar cualquier historia técnica o Sprint como **TERMINADO**:
 | **Sprint 6**  | Persistencia y Modelo Prisma 7 + SQLite en Backend    | 🟢 Completado  |
 | **Sprint 7**  | API REST de Gestión de Respuestas (`/bot-responses`)  | 🟢 Completado  |
 | **Sprint 8**  | Conexión Dinámica de `BotService` con Base de Datos   | 🟢 Completado  |
-| **Sprint 9**  | Frontend Angular - Gestión de Respuestas con Tailwind | ⚪ Por Iniciar |
+| **Sprint 9**  | Frontend Angular - Gestión de Respuestas con Tailwind | 🟢 Completado  |
 | **Sprint 10** | Validación Integral End-to-End (UI ➔ WhatsApp)        | ⚪ Por Iniciar |

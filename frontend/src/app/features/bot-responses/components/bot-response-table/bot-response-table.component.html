@@ -1,0 +1,109 @@
+<div class="mt-8">
+  @if (isLoading()) {
+    <div class="flex flex-col items-center justify-center py-20 text-on-surface-variant">
+      <div
+        class="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-container mb-3"
+      ></div>
+      <p class="text-sm font-medium">Loading bot responses from database...</p>
+    </div>
+  } @else if (errorMessage()) {
+    <div
+      class="p-5 rounded-2xl bg-error-container/60 border border-error-container text-on-error-container flex items-start justify-between shadow-sm"
+    >
+      <div class="flex items-start gap-3">
+        <svg lucideAlertCircle class="w-5 h-5 text-error shrink-0 mt-0.5"></svg>
+        <div>
+          <p class="font-bold text-sm">Connection Error</p>
+          <p class="text-xs text-on-error-container mt-1">{{ errorMessage() }}</p>
+        </div>
+      </div>
+      <button
+        (click)="retry.emit()"
+        class="px-4 py-1.5 bg-error hover:bg-on-error-container text-white text-xs font-bold rounded-full transition cursor-pointer"
+      >
+        Retry
+      </button>
+    </div>
+  } @else if (responses().length === 0) {
+    <div
+      class="flex flex-col items-center justify-center py-20 bg-surface-container-lowest rounded-3xl border border-outline-variant/40 shadow-[0_8px_24px_-4px_rgba(27,59,43,0.06)]"
+    >
+      <div
+        class="w-16 h-16 rounded-full bg-secondary-container/40 flex items-center justify-center text-primary-container mb-3"
+      >
+        <svg lucideInbox class="w-8 h-8"></svg>
+      </div>
+      <h3 class="text-lg font-bold text-on-surface">No bot responses found</h3>
+      <p class="text-on-surface-variant text-sm mt-1 font-medium">
+        Create your first automated response to get started.
+      </p>
+    </div>
+  } @else {
+    <!-- Table of Responses -->
+    <div
+      class="overflow-x-auto rounded-3xl border border-outline-variant/40 shadow-[0_8px_24px_-4px_rgba(27,59,43,0.06)] bg-surface-container-lowest"
+    >
+      <table class="w-full text-left text-sm text-on-surface">
+        <thead
+          class="bg-surface text-xs font-bold uppercase tracking-wider text-on-surface-variant border-b border-outline-variant/30"
+        >
+          <tr>
+            <th scope="col" class="px-6 py-4">ID</th>
+            <th scope="col" class="px-6 py-4">Keyword</th>
+            <th scope="col" class="px-6 py-4">Response Content</th>
+            <th scope="col" class="px-6 py-4 text-center">Status</th>
+            <th scope="col" class="px-6 py-4 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant/20">
+          @for (item of responses(); track item.id) {
+            <tr class="hover:bg-surface-container-low transition-colors">
+              <td class="px-6 py-4 font-mono text-xs text-outline">#{{ item.id }}</td>
+              <td class="px-6 py-4 font-bold text-tertiary font-mono">
+                {{ item.keyword }}
+              </td>
+              <td class="px-6 py-4 max-w-md">
+                <p class="truncate text-on-surface font-medium" [title]="item.response">
+                  {{ item.response }}
+                </p>
+              </td>
+              <td class="px-6 py-4 text-center">
+                @if (item.isActive) {
+                  <span
+                    class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-secondary-container/50 text-tertiary border border-secondary-container"
+                  >
+                    Active
+                  </span>
+                } @else {
+                  <span
+                    class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-surface-container-high text-outline border border-outline-variant/50"
+                  >
+                    Inactive
+                  </span>
+                }
+              </td>
+              <td class="px-6 py-4 text-right space-x-2">
+                <button
+                  (click)="edit.emit(item)"
+                  title="Edit response"
+                  class="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold rounded-full text-on-surface bg-secondary-container/40 hover:bg-secondary-container transition cursor-pointer"
+                >
+                  <svg lucidePencil class="w-3.5 h-3.5 text-tertiary"></svg>
+                  <span>Edit</span>
+                </button>
+                <button
+                  (click)="delete.emit(item)"
+                  title="Delete response"
+                  class="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold rounded-full text-error bg-error-container/40 hover:bg-error-container border border-error-container transition cursor-pointer"
+                >
+                  <svg lucideTrash2 class="w-3.5 h-3.5"></svg>
+                  <span>Delete</span>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
