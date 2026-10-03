@@ -235,10 +235,10 @@ Para considerar cualquier historia técnica o Sprint como **TERMINADO**:
 
 #### Historias Técnicas:
 
-- [ ] **TS-10.1 (Creación desde UI):** Crear un comando nuevo desde la pantalla de Angular en `http://localhost:4200`.
-- [ ] **TS-10.2 (Validación en WhatsApp):** Enviar la palabra clave desde WhatsApp y verificar que el bot devuelva la respuesta recién configurada.
-- [ ] **TS-10.3 (Edición y Eliminación en Vivo):** Modificar la respuesta desde la UI y validar que el cambio se refleje inmediatamente en el chat.
-- [ ] **TS-10.4 (DoD y Commit):** Realizar compilación de producción en ambos proyectos y commit semántico de cierre de Fase 2.
+- [x] **TS-10.1 (Creación desde UI):** Crear un comando nuevo desde la pantalla de Angular en `http://localhost:4200`.
+- [x] **TS-10.2 (Validación en WhatsApp):** Enviar la palabra clave desde WhatsApp y verificar que el bot devuelva la respuesta recién configurada.
+- [x] **TS-10.3 (Edición y Eliminación en Vivo):** Modificar la respuesta desde la UI y validar que el cambio se refleje inmediatamente en el chat.
+- [x] **TS-10.4 (DoD y Commit):** Realizar compilación de producción en ambos proyectos y commit semántico de cierre de Fase 2.
 
 ---
 
@@ -254,16 +254,16 @@ Para considerar cualquier historia técnica o Sprint como **TERMINADO**:
 
 ## 📊 Tablero de Progreso
 
-| Sprint        | Enfoque Principal                                     | Estado         |
-| :------------ | :---------------------------------------------------- | :------------- |
-| **Sprint 0**  | Setup de Entorno, Cuenta Meta for Developers & Túnel  | 🟢 Completado  |
-| **Sprint 1**  | Handshake y Verificación del Webhook (`GET /webhook`) | 🟢 Completado  |
-| **Sprint 2**  | Recepción de Mensajes Entrantes (`POST /webhook`)     | 🟢 Completado  |
-| **Sprint 3**  | Envío de Mensajes con Graph API (Echo Bot Funcional)  | 🟢 Completado  |
-| **Sprint 4**  | Lógica de Comandos y Arquitectura Limpia              | 🟢 Completado  |
-| **Sprint 5**  | Pruebas Unitarias y E2E con Mocks                     | 🟢 Completado  |
-| **Sprint 6**  | Persistencia y Modelo Prisma 7 + SQLite en Backend    | 🟢 Completado  |
-| **Sprint 7**  | API REST de Gestión de Respuestas (`/bot-responses`)  | 🟢 Completado  |
-| **Sprint 8**  | Conexión Dinámica de `BotService` con Base de Datos   | 🟢 Completado  |
-| **Sprint 9**  | Frontend Angular - Gestión de Respuestas con Tailwind | 🟢 Completado  |
-| **Sprint 10** | Validación Integral End-to-End (UI ➔ WhatsApp)        | ⚪ Por Iniciar |
+| Sprint        | Enfoque Principal                                     | Estado        |
+| :------------ | :---------------------------------------------------- | :------------ |
+| **Sprint 0**  | Setup de Entorno, Cuenta Meta for Developers & Túnel  | 🟢 Completado |
+| **Sprint 1**  | Handshake y Verificación del Webhook (`GET /webhook`) | 🟢 Completado |
+| **Sprint 2**  | Recepción de Mensajes Entrantes (`POST /webhook`)     | 🟢 Completado |
+| **Sprint 3**  | Envío de Mensajes con Graph API (Echo Bot Funcional)  | 🟢 Completado |
+| **Sprint 4**  | Lógica de Comandos y Arquitectura Limpia              | 🟢 Completado |
+| **Sprint 5**  | Pruebas Unitarias y E2E con Mocks                     | 🟢 Completado |
+| **Sprint 6**  | Persistencia y Modelo Prisma 7 + SQLite en Backend    | 🟢 Completado |
+| **Sprint 7**  | API REST de Gestión de Respuestas (`/bot-responses`)  | 🟢 Completado |
+| **Sprint 8**  | Conexión Dinámica de `BotService` con Base de Datos   | 🟢 Completado |
+| **Sprint 9**  | Frontend Angular - Gestión de Respuestas con Tailwind | 🟢 Completado |
+| **Sprint 10** | Validación Integral End-to-End (UI ➔ WhatsApp)        | 🟢 Completado |
