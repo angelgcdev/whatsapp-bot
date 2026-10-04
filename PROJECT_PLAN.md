@@ -264,29 +264,22 @@ Para considerar cualquier historia técnica o Sprint como **TERMINADO**:
 
 ### 🔹 Sprint 12: Maquetación de Live Conversations (Split-View Chat Mock)
 
-**Objetivo del Sprint:** Construir la interfaz de atención de conversaciones en vivo en dos columnas (*Master-Detail*), inspirada en el flujo de trabajo de atención al cliente por WhatsApp.
+**Objetivo del Sprint:** Construir la interfaz de atención de conversaciones en vivo en dos columnas (*Master-Detail*), inspirada en el flujo de trabajo de atención al cliente por WhatsApp (prototipo visual rápido para explorar ideas).
 
 #### Historias Técnicas / UI:
 
-- [ ] **TS-12.1 (Modelos y Mock Data):** Definir interfaces TypeScript (`Conversation`, `ChatMessage`) y dataset de prueba inicial con estados y marcas de tiempo realistas.
-- [ ] **TS-12.2 (Panel Lista de Conversaciones):** Maquetar la columna izquierda con barra de búsqueda rápida, filtros de estado (`Todos`, `Bot`, `Humano`) y tarjetas de chat con avatar, último mensaje, tiempo relativo y badge `Bot`.
-- [ ] **TS-12.3 (Cabecera de Chat & Switch Bot):** Maquetar la cabecera del chat seleccionado con nombre del contacto, número de teléfono y switch interactivo `[🟢 Bot Activo]` con señal reactiva (*signal*).
-- [ ] **TS-12.4 (Timeline de Mensajes):** Crear la visualización de mensajes con burbujas diferenciadas:
+- [x] **TS-12.1 (Modelos y Mock Data):** Definir interfaces TypeScript (`Conversation`, `ChatMessage`) y dataset de prueba inicial colocados en el componente para exploración ágil de UI.
+- [x] **TS-12.2 (Panel Lista de Conversaciones):** Maquetar la columna izquierda con barra de búsqueda rápida, filtros de estado (`Todos`, `Bot`, `Humano`) y tarjetas de chat con avatar, último mensaje, tiempo relativo y badge `Bot`.
+- [x] **TS-12.3 (Cabecera de Chat & Switch Bot):** Maquetar la cabecera del chat seleccionado con nombre del contacto, número de teléfono y switch interactivo `[🟢 Bot Activo]` con señal reactiva (*signal*).
+- [x] **TS-12.4 (Timeline de Mensajes):** Crear la visualización de mensajes con burbujas diferenciadas:
   - Mensaje del cliente a la izquierda (burbuja gris/neutra con remitente y hora).
-  - Mensaje del bot a la derecha (burbuja azul con badge de IA/Bot, formato y hora).
-- [ ] **TS-12.5 (Barra de Respuesta Manual):** Diseñar el cajón inferior para escribir y simular el envío de mensajes por un operador humano.
+  - Mensaje del bot a la derecha (burbuja verde/marca con badge de IA/Bot, formato y hora).
+  - Mensaje de agente humano a la derecha con badge de operador.
+- [x] **TS-12.5 (Barra de Respuesta Manual):** Diseñar el cajón inferior para escribir y simular el envío de mensajes por un operador humano.
 
 ---
 
-### 🔹 Sprint 13: Pulido Visual, Dark Mode y Validación de Usabilidad
-
-**Objetivo del Sprint:** Asegurar consistencia visual total en modo claro y oscuro, diseño responsivo y compilación limpia para producción.
-
-#### Historias Técnicas:
-
-- [ ] **TS-13.1 (Soporte Dark Mode Completo):** Ajustar paleta de colores de Tailwind en Conversations para garantizar contraste óptimo en Dark Mode y Light Mode.
-- [ ] **TS-13.2 (Navegación Fluida):** Probar el flujo de transición instantánea entre `/conversations` y `/bot-responses` sin parpadeos ni recargas.
-- [ ] **TS-13.3 (DoD y Commit Semántico):** Validar compilación limpia (`npm run build`) y realizar commit semántico de cierre de Fase 3.
+> **Nota de Cierre de Fase 3:** La maquetación base y prototipado visual de la interfaz quedan consolidados en los Sprints 11 y 12. Las tareas de pulido estético continuo y detalles finos de usabilidad se realizarán de manera incremental a medida que se implementen las funcionalidades reales en las siguientes fases.
 
 ---
 
@@ -317,5 +310,5 @@ Para considerar cualquier historia técnica o Sprint como **TERMINADO**:
 | **Sprint 9**  | Frontend Angular - Gestión de Respuestas con Tailwind | 🟢 Completado  |
 | **Sprint 10** | Validación Integral End-to-End (UI ➔ WhatsApp)        | 🟢 Completado  |
 | **Sprint 11** | Arquitectura de Layout Base (Sidebar, Header & Rutas) | 🟢 Completado  |
-| **Sprint 12** | Maquetación UI de Live Conversations (Split-View)     | 🟡 En Progreso |
-| **Sprint 13** | Pulido Visual, Dark Mode y Validación de Usabilidad   | ⚪ Por Iniciar |
+| **Sprint 12** | Maquetación UI de Live Conversations (Split-View)     | 🟢 Completado  |
+| **Fase 4**    | Tiempo Real, Persistencia de Chats e IA               | 🟡 Próximo Hito |

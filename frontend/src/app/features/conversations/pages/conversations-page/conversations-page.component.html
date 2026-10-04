@@ -1,8 +1,304 @@
-<div class="h-full flex items-center justify-center p-8 bg-background">
-  <div class="text-center">
-    <h2 class="text-xl font-bold text-on-surface">Conversations</h2>
-    <p class="text-sm text-on-surface-variant mt-1">
-      Listo para maquetar la vista split-view de las conversaciones.
-    </p>
-  </div>
+<div class="flex h-full w-full overflow-hidden bg-background">
+  <!-- ========================================== -->
+  <!-- COLUMNA IZQUIERDA: LISTA DE CONVERSACIONES -->
+  <!-- ========================================== -->
+  <aside
+    class="w-80 md:w-96 flex flex-col border-r border-outline-variant/30 bg-surface-container-low/60 shrink-0"
+  >
+    <!-- Encabezado y Buscador -->
+    <div class="p-4 border-b border-outline-variant/20 space-y-3">
+      <div class="flex items-center justify-between">
+        <h1 class="text-lg font-bold text-on-surface">Conversaciones</h1>
+        <span
+          class="px-2 py-0.5 text-xs font-semibold rounded-full bg-surface-container-high text-on-surface-variant"
+        >
+          {{ filteredConversations().length }}
+        </span>
+      </div>
+
+      <!-- Barra de búsqueda rápida -->
+      <div class="relative">
+        <svg
+          class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-outline"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-4.35-4.35m1.85-5.65a7 7 0 11-14 0 7 7 0 0114 0z"
+          />
+        </svg>
+        <input
+          type="text"
+          [value]="searchQuery()"
+          (input)="searchQuery.set($any($event.target).value)"
+          placeholder="Buscar contacto o teléfono..."
+          class="w-full pl-9 pr-3 py-2 text-sm rounded-lg bg-surface-container-lowest border border-outline-variant/40 text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
+        />
+      </div>
+
+      <!-- Filtros de estado -->
+      <div
+        class="flex gap-1.5 p-1 bg-surface-container-lowest rounded-lg border border-outline-variant/30"
+      >
+        <button
+          type="button"
+          (click)="activeFilter.set('all')"
+          [class.bg-surface-container-high]="activeFilter() === 'all'"
+          [class.font-semibold]="activeFilter() === 'all'"
+          class="flex-1 py-1 text-xs rounded-md text-on-surface hover:bg-surface-container transition-colors text-center"
+        >
+          Todos
+        </button>
+        <button
+          type="button"
+          (click)="activeFilter.set('bot')"
+          [class.bg-surface-container-high]="activeFilter() === 'bot'"
+          [class.font-semibold]="activeFilter() === 'bot'"
+          class="flex-1 py-1 text-xs rounded-md text-on-surface hover:bg-surface-container transition-colors text-center flex items-center justify-center gap-1"
+        >
+          🤖 Bot
+        </button>
+        <button
+          type="button"
+          (click)="activeFilter.set('human')"
+          [class.bg-surface-container-high]="activeFilter() === 'human'"
+          [class.font-semibold]="activeFilter() === 'human'"
+          class="flex-1 py-1 text-xs rounded-md text-on-surface hover:bg-surface-container transition-colors text-center flex items-center justify-center gap-1"
+        >
+          👤 Humano
+        </button>
+      </div>
+    </div>
+
+    <!-- Lista scrolleable de chats -->
+    <div class="flex-1 overflow-y-auto divide-y divide-outline-variant/15">
+      @for (conv of filteredConversations(); track conv.id) {
+        <button
+          type="button"
+          (click)="selectConversation(conv.id)"
+          [class.bg-surface-container-high]="selectedId() === conv.id"
+          [class.hover:bg-surface-container]="selectedId() !== conv.id"
+          class="w-full text-left p-3.5 flex items-start gap-3 transition-colors relative"
+        >
+          <!-- Barra lateral activa -->
+          @if (selectedId() === conv.id) {
+            <span class="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-r"></span>
+          }
+
+          <!-- Avatar -->
+          <img
+            [src]="conv.avatarUrl"
+            [alt]="conv.contactName"
+            class="w-11 h-11 rounded-full object-cover shrink-0 border border-outline-variant/30"
+          />
+
+          <!-- Detalles del chat -->
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between gap-1 mb-0.5">
+              <h2 class="text-sm font-semibold text-on-surface truncate">
+                {{ conv.contactName }}
+              </h2>
+              <span class="text-[11px] text-outline shrink-0">
+                {{ conv.lastMessageTimestamp }}
+              </span>
+            </div>
+
+            <p class="text-xs text-outline mb-1.5">{{ conv.phoneNumber }}</p>
+
+            <p class="text-xs text-on-surface-variant truncate">
+              {{ conv.lastMessage }}
+            </p>
+
+            <!-- Badges de estado -->
+            <div class="flex items-center gap-2 mt-2">
+              @if (conv.isBotActive) {
+                <span
+                  class="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full bg-primary/10 text-primary"
+                >
+                  <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  Bot Activo
+                </span>
+              } @else {
+                <span
+                  class="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full bg-secondary/15 text-secondary"
+                >
+                  <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  Agente Humano
+                </span>
+              }
+
+              @if (conv.unreadCount > 0) {
+                <span
+                  class="ml-auto px-1.5 py-0.5 text-[10px] font-bold rounded-full bg-primary text-on-primary"
+                >
+                  {{ conv.unreadCount }}
+                </span>
+              }
+            </div>
+          </div>
+        </button>
+      } @empty {
+        <div class="p-8 text-center text-outline text-xs">No se encontraron conversaciones.</div>
+      }
+    </div>
+  </aside>
+
+  <!-- ========================================== -->
+  <!-- COLUMNA DERECHA: CHAT ACTIVO Y MENSAJES   -->
+  <!-- ========================================== -->
+  <section class="flex-1 flex flex-col h-full overflow-hidden bg-surface">
+    @if (selectedConversation(); as chat) {
+      <!-- Cabecera del chat -->
+      <header
+        class="h-16 px-6 border-b border-outline-variant/30 flex items-center justify-between bg-surface-container-lowest shrink-0"
+      >
+        <div class="flex items-center gap-3">
+          <img
+            [src]="chat.avatarUrl"
+            [alt]="chat.contactName"
+            class="w-10 h-10 rounded-full object-cover border border-outline-variant/30"
+          />
+          <div>
+            <h2 class="text-sm font-bold text-on-surface">
+              {{ chat.contactName }}
+            </h2>
+            <p class="text-xs text-outline">{{ chat.phoneNumber }}</p>
+          </div>
+        </div>
+
+        <!-- Switch de control del Bot -->
+        <div class="flex items-center gap-3">
+          <span class="text-xs font-medium text-on-surface-variant hidden sm:inline">
+            Modo de Atención:
+          </span>
+          <button
+            type="button"
+            (click)="toggleBotStatus()"
+            [class.bg-primary]="chat.isBotActive"
+            [class.bg-outline-variant]="!chat.isBotActive"
+            class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none"
+            title="Alternar bot"
+          >
+            <span
+              [class.translate-x-5]="chat.isBotActive"
+              [class.translate-x-0]="!chat.isBotActive"
+              class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out"
+            ></span>
+          </button>
+          <span
+            class="text-xs font-semibold px-2 py-0.5 rounded-md"
+            [class.bg-primary/10]="chat.isBotActive"
+            [class.text-primary]="chat.isBotActive"
+            [class.bg-secondary/15]="!chat.isBotActive"
+            [class.text-secondary]="!chat.isBotActive"
+          >
+            {{ chat.isBotActive ? '🤖 Bot' : '👤 Humano' }}
+          </span>
+        </div>
+      </header>
+
+      <!-- Timeline de Mensajes -->
+      <div class="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 bg-surface">
+        @for (msg of chat.messages; track msg.id) {
+          <!-- Mensaje del Cliente (Izquierda) -->
+          @if (msg.sender === 'customer') {
+            <div class="flex items-start gap-2.5 max-w-xl">
+              <div
+                class="bg-surface-container-highest text-on-surface rounded-2xl rounded-tl-sm px-4 py-3 shadow-xs border border-outline-variant/20"
+              >
+                <p class="text-sm leading-relaxed whitespace-pre-wrap">{{ msg.text }}</p>
+                <span class="block text-[10px] text-outline mt-1.5 text-right">
+                  {{ msg.timestamp }}
+                </span>
+              </div>
+            </div>
+          }
+
+          <!-- Mensaje del Bot (Derecha) -->
+          @if (msg.sender === 'bot') {
+            <div class="flex items-end justify-end gap-2.5 ml-auto max-w-xl">
+              <div
+                class="bg-primary-container text-on-primary-container rounded-2xl rounded-tr-sm px-4 py-3 shadow-xs"
+              >
+                <div class="flex items-center gap-1.5 mb-1 text-[11px] font-semibold opacity-90">
+                  <span>🤖 Bot Auto-Reply</span>
+                </div>
+                <p class="text-sm leading-relaxed whitespace-pre-wrap">{{ msg.text }}</p>
+                <span class="block text-[10px] opacity-75 mt-1.5 text-right">
+                  {{ msg.timestamp }}
+                </span>
+              </div>
+            </div>
+          }
+
+          <!-- Mensaje del Agente Humano (Derecha) -->
+          @if (msg.sender === 'agent') {
+            <div class="flex items-end justify-end gap-2.5 ml-auto max-w-xl">
+              <div
+                class="bg-secondary-container text-on-secondary-container rounded-2xl rounded-tr-sm px-4 py-3 shadow-xs"
+              >
+                <div class="flex items-center gap-1.5 mb-1 text-[11px] font-semibold opacity-90">
+                  <span>👤 Agente (Tú)</span>
+                </div>
+                <p class="text-sm leading-relaxed whitespace-pre-wrap">{{ msg.text }}</p>
+                <span class="block text-[10px] opacity-75 mt-1.5 text-right">
+                  {{ msg.timestamp }}
+                </span>
+              </div>
+            </div>
+          }
+        }
+      </div>
+
+      <!-- Cajón inferior para escribir respuesta manual -->
+      <footer class="p-4 border-t border-outline-variant/30 bg-surface-container-lowest shrink-0">
+        <form (submit)="sendMessage(); $event.preventDefault()" class="flex items-center gap-2">
+          <input
+            type="text"
+            [(ngModel)]="newMessageText"
+            name="newMessageText"
+            placeholder="Escribe un mensaje como operador humano... (Presiona Enter)"
+            class="flex-1 px-4 py-2.5 text-sm rounded-lg bg-surface-container-low border border-outline-variant/40 text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
+          />
+          <button
+            type="submit"
+            [disabled]="!newMessageText.trim()"
+            class="px-4 py-2.5 text-sm font-semibold rounded-lg bg-primary text-on-primary hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center gap-1.5 shrink-0"
+          >
+            <span>Enviar</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+              />
+            </svg>
+          </button>
+        </form>
+      </footer>
+    } @else {
+      <!-- Estado vacío cuando no hay conversación seleccionada -->
+      <div class="flex-1 flex flex-col items-center justify-center p-8 text-center text-outline">
+        <svg
+          class="w-16 h-16 mb-4 opacity-40"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.5"
+            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+          />
+        </svg>
+        <p class="text-sm font-medium">Selecciona una conversación para ver los mensajes</p>
+      </div>
+    }
+  </section>
 </div>
