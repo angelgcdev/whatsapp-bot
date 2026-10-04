@@ -1,3 +1,11 @@
-<main class="min-h-screen bg-background text-on-background antialiased">
-  <router-outlet />
-</main>
+<div
+  class="flex h-screen w-screen overflow-hidden bg-background text-on-background antialiased font-sans"
+>
+  <!-- Barra lateral persistente -->
+  <app-sidebar />
+
+  <!-- Vista dinámica -->
+  <main class="flex-1 flex flex-col h-full overflow-hidden bg-background">
+    <router-outlet />
+  </main>
+</div>

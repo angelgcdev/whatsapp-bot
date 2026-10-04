@@ -242,28 +242,80 @@ Para considerar cualquier historia técnica o Sprint como **TERMINADO**:
 
 ---
 
-## 🔮 Backlog de Futuras Mejoras (Fase 3)
+---
 
-- [ ] Integración con LLM (Gemini / OpenAI) para respuestas inteligentes con memoria de conversación.
-- [ ] Soporte para mensajes multimedia (imágenes, audios, documentos).
-- [ ] Mensajes interactivos de WhatsApp (botones de respuesta rápida y listas desplegables).
-- [ ] Historial de conversaciones de chat persistido en base de datos.
-- [ ] Dashboard con métricas de mensajes en tiempo real.
+## 🎨 Fase 3: Rediseño UI SaaS Profesional & Mock Live Inbox (Sprints 11 al 13)
+
+> **Objetivo:** Transformar la interfaz en un panel SaaS moderno e intuitivo de atención al cliente (estilo Respond.io / Chatwoot / ManyChat), con barra lateral persistente (Sidebar), navegación fluida y vista partida (*Split-View*) para monitorear conversaciones en vivo con mock interactivo de mensajes y control de estado del bot.
+
+---
+
+### 🔹 Sprint 11: Arquitectura de Layout Base (Sidebar, Header & Enrutamiento)
+
+**Objetivo del Sprint:** Implementar el armazón persistente de la aplicación con navegación lateral fija y enrutamiento modular siguiendo CoC y DDD.
+
+#### Historias Técnicas:
+
+- [x] **TS-11.1 (Sidebar Component):** Crear `SidebarComponent` en `src/app/layout/sidebar/` con branding "AILINK BOT", enlaces a `/conversations`, `/bot-responses`, placeholder `/dashboard`, avatar de usuario y selector Dark/Light mode con `ThemeService`.
+- [x] **TS-11.2 (Enrutamiento Modular):** Configurar `app.routes.ts` con carga perezosa (*lazy loading*) para `/conversations` y `/bot-responses`, redireccionando la raíz `/` a `/conversations`.
+- [x] **TS-11.3 (Layout Shell):** Integrar en `app.html` la estructura de dos columnas de altura completa (`flex h-screen` con Sidebar fija a la izquierda y `<router-outlet />` dinámico a la derecha).
+
+---
+
+### 🔹 Sprint 12: Maquetación de Live Conversations (Split-View Chat Mock)
+
+**Objetivo del Sprint:** Construir la interfaz de atención de conversaciones en vivo en dos columnas (*Master-Detail*), inspirada en el flujo de trabajo de atención al cliente por WhatsApp.
+
+#### Historias Técnicas / UI:
+
+- [ ] **TS-12.1 (Modelos y Mock Data):** Definir interfaces TypeScript (`Conversation`, `ChatMessage`) y dataset de prueba inicial con estados y marcas de tiempo realistas.
+- [ ] **TS-12.2 (Panel Lista de Conversaciones):** Maquetar la columna izquierda con barra de búsqueda rápida, filtros de estado (`Todos`, `Bot`, `Humano`) y tarjetas de chat con avatar, último mensaje, tiempo relativo y badge `Bot`.
+- [ ] **TS-12.3 (Cabecera de Chat & Switch Bot):** Maquetar la cabecera del chat seleccionado con nombre del contacto, número de teléfono y switch interactivo `[🟢 Bot Activo]` con señal reactiva (*signal*).
+- [ ] **TS-12.4 (Timeline de Mensajes):** Crear la visualización de mensajes con burbujas diferenciadas:
+  - Mensaje del cliente a la izquierda (burbuja gris/neutra con remitente y hora).
+  - Mensaje del bot a la derecha (burbuja azul con badge de IA/Bot, formato y hora).
+- [ ] **TS-12.5 (Barra de Respuesta Manual):** Diseñar el cajón inferior para escribir y simular el envío de mensajes por un operador humano.
+
+---
+
+### 🔹 Sprint 13: Pulido Visual, Dark Mode y Validación de Usabilidad
+
+**Objetivo del Sprint:** Asegurar consistencia visual total en modo claro y oscuro, diseño responsivo y compilación limpia para producción.
+
+#### Historias Técnicas:
+
+- [ ] **TS-13.1 (Soporte Dark Mode Completo):** Ajustar paleta de colores de Tailwind en Conversations para garantizar contraste óptimo en Dark Mode y Light Mode.
+- [ ] **TS-13.2 (Navegación Fluida):** Probar el flujo de transición instantánea entre `/conversations` y `/bot-responses` sin parpadeos ni recargas.
+- [ ] **TS-13.3 (DoD y Commit Semántico):** Validar compilación limpia (`npm run build`) y realizar commit semántico de cierre de Fase 3.
+
+---
+
+## 🔮 Backlog de Futuras Mejoras (Fase 4: Tiempo Real & Inteligencia Artificial)
+
+- [ ] **Persistencia de Conversaciones:** Guardar en SQLite cada mensaje entrante y saliente asociado a un número de teléfono.
+- [ ] **Sincronización en Tiempo Real (WebSockets / SSE):** Conectar el backend con el frontend para que los mensajes de WhatsApp aparezcan en el Inbox al instante sin refrescar la página.
+- [ ] **Acción de Switch Bot en Backend:** Permitir pausar el bot desde la UI para que un agente humano tome el control del chat.
+- [ ] **Integración con LLM (Gemini):** Respuestas inteligentes contextuales con memoria de conversación.
+- [ ] **Mensajes Interactivos:** Soporte para botones y listas de WhatsApp.
+- [ ] **Dashboard de Métricas:** Gráficos de volumen de mensajes y tiempos de respuesta.
 
 ---
 
 ## 📊 Tablero de Progreso
 
-| Sprint        | Enfoque Principal                                     | Estado        |
-| :------------ | :---------------------------------------------------- | :------------ |
-| **Sprint 0**  | Setup de Entorno, Cuenta Meta for Developers & Túnel  | 🟢 Completado |
-| **Sprint 1**  | Handshake y Verificación del Webhook (`GET /webhook`) | 🟢 Completado |
-| **Sprint 2**  | Recepción de Mensajes Entrantes (`POST /webhook`)     | 🟢 Completado |
-| **Sprint 3**  | Envío de Mensajes con Graph API (Echo Bot Funcional)  | 🟢 Completado |
-| **Sprint 4**  | Lógica de Comandos y Arquitectura Limpia              | 🟢 Completado |
-| **Sprint 5**  | Pruebas Unitarias y E2E con Mocks                     | 🟢 Completado |
-| **Sprint 6**  | Persistencia y Modelo Prisma 7 + SQLite en Backend    | 🟢 Completado |
-| **Sprint 7**  | API REST de Gestión de Respuestas (`/bot-responses`)  | 🟢 Completado |
-| **Sprint 8**  | Conexión Dinámica de `BotService` con Base de Datos   | 🟢 Completado |
-| **Sprint 9**  | Frontend Angular - Gestión de Respuestas con Tailwind | 🟢 Completado |
-| **Sprint 10** | Validación Integral End-to-End (UI ➔ WhatsApp)        | 🟢 Completado |
+| Sprint        | Enfoque Principal                                     | Estado         |
+| :------------ | :---------------------------------------------------- | :------------- |
+| **Sprint 0**  | Setup de Entorno, Cuenta Meta for Developers & Túnel  | 🟢 Completado  |
+| **Sprint 1**  | Handshake y Verificación del Webhook (`GET /webhook`) | 🟢 Completado  |
+| **Sprint 2**  | Recepción de Mensajes Entrantes (`POST /webhook`)     | 🟢 Completado  |
+| **Sprint 3**  | Envío de Mensajes con Graph API (Echo Bot Funcional)  | 🟢 Completado  |
+| **Sprint 4**  | Lógica de Comandos y Arquitectura Limpia              | 🟢 Completado  |
+| **Sprint 5**  | Pruebas Unitarias y E2E con Mocks                     | 🟢 Completado  |
+| **Sprint 6**  | Persistencia y Modelo Prisma 7 + SQLite en Backend    | 🟢 Completado  |
+| **Sprint 7**  | API REST de Gestión de Respuestas (`/bot-responses`)  | 🟢 Completado  |
+| **Sprint 8**  | Conexión Dinámica de `BotService` con Base de Datos   | 🟢 Completado  |
+| **Sprint 9**  | Frontend Angular - Gestión de Respuestas con Tailwind | 🟢 Completado  |
+| **Sprint 10** | Validación Integral End-to-End (UI ➔ WhatsApp)        | 🟢 Completado  |
+| **Sprint 11** | Arquitectura de Layout Base (Sidebar, Header & Rutas) | 🟢 Completado  |
+| **Sprint 12** | Maquetación UI de Live Conversations (Split-View)     | 🟡 En Progreso |
+| **Sprint 13** | Pulido Visual, Dark Mode y Validación de Usabilidad   | ⚪ Por Iniciar |
