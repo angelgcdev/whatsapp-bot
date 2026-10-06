@@ -1,15 +1,25 @@
+export interface WhatsAppMessage {
+  from: string;
+  type: string;
+  text?: { body: string };
+}
+
+export interface WhatsAppStatus {
+  status: string;
+}
+
 export interface WhatsAppPayload {
   entry?: {
     changes?: {
       value?: {
-        messages?: {
-          from: string;
-          type: string;
-          text?: { body: string };
+        contacts?: {
+          profile?: {
+            name?: string;
+          };
+          wa_id?: string;
         }[];
-        statuses?: {
-          status: string;
-        }[];
+        messages?: WhatsAppMessage[];
+        statuses?: WhatsAppStatus[];
       };
     }[];
   }[];

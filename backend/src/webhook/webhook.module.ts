@@ -3,9 +3,10 @@ import { WebhookService } from './webhook.service';
 import { WebhookController } from './webhook.controller';
 import { WhatsappModule } from '../whatsapp/whatsapp.module';
 import { BotModule } from '../bot/bot.module';
+import { ConversationsModule } from 'src/conversations/conversations.module';
 
 @Module({
-  imports: [WhatsappModule, BotModule],
+  imports: [WhatsappModule, BotModule, ConversationsModule],
   controllers: [WebhookController],
   providers: [WebhookService],
 })

@@ -7,6 +7,7 @@ import { WhatsappModule } from './whatsapp/whatsapp.module';
 import { BotModule } from './bot/bot.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { BotResponsesModule } from './bot-responses/bot-responses.module';
+import { ConversationsModule } from './conversations/conversations.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { BotResponsesModule } from './bot-responses/bot-responses.module';
     BotModule,
     PrismaModule,
     BotResponsesModule,
+    ConversationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

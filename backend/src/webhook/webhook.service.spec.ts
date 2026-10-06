@@ -5,12 +5,18 @@ import { WhatsappService } from '../whatsapp/whatsapp.service';
 import { BotService } from '../bot/bot.service';
 import { ForbiddenException } from '@nestjs/common';
 import { WhatsAppPayload } from './interfaces/whatsapp-payload.interface';
+import { ConversationsService } from '../conversations/conversations.service';
+import { MessageSender } from '../generated/prisma/enums';
 
 describe('WebhookService', () => {
   let service: WebhookService;
   let configService: { get: jest.Mock };
   let whatsappService: { sendTextMessage: jest.Mock };
   let botService: { processMessage: jest.Mock };
+  let conversationsService: {
+    findOrCreateByPhone: jest.Mock;
+    createMessage: jest.Mock;
+  };
 
   beforeEach(async () => {
     configService = {
@@ -25,12 +31,18 @@ describe('WebhookService', () => {
       processMessage: jest.fn(),
     };
 
+    conversationsService = {
+      findOrCreateByPhone: jest.fn(),
+      createMessage: jest.fn(),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         WebhookService,
         { provide: ConfigService, useValue: configService },
         { provide: WhatsappService, useValue: whatsappService },
         { provide: BotService, useValue: botService },
+        { provide: ConversationsService, useValue: conversationsService },
       ],
     }).compile();
 
@@ -74,8 +86,74 @@ describe('WebhookService', () => {
   });
 
   describe('handleIncoming', () => {
-    // Arrange
-    it('should process text message and send reply via WhatsappService', async () => {
+    it('should process text message, persist conversation and messages, and send reply', async () => {
+      const payload: WhatsAppPayload = {
+        entry: [
+          {
+            changes: [
+              {
+                value: {
+                  contacts: [{ profile: { name: 'Carlos Gomez' } }],
+                  messages: [
+                    {
+                      from: '123456789',
+                      type: 'text',
+                      text: { body: 'hola' },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        ],
+      };
+
+      const mockConversation = {
+        id: 'conv-123',
+        phoneNumber: '123456789',
+        contactName: 'Carlos Gomez',
+        isBotActive: true,
+      };
+
+      const reply = '👋 ¡Hola! Bienvenido a nuestro asistente virtual.';
+
+      conversationsService.findOrCreateByPhone.mockResolvedValue(
+        mockConversation,
+      );
+      botService.processMessage.mockResolvedValue(reply);
+      whatsappService.sendTextMessage.mockResolvedValue({
+        messaging_product: 'whatsapp',
+        contacts: [{ input: '123456789', wa_id: '123456789' }],
+        messages: [{ id: 'wamid.HBgL' }],
+      });
+
+      // Act
+      const result = await service.handleIncoming(payload);
+
+      // Assert
+      expect(conversationsService.findOrCreateByPhone).toHaveBeenCalledWith(
+        '123456789',
+        'Carlos Gomez',
+      );
+      expect(conversationsService.createMessage).toHaveBeenCalledWith(
+        'conv-123',
+        MessageSender.CUSTOMER,
+        'hola',
+      );
+      expect(botService.processMessage).toHaveBeenCalledWith('hola');
+      expect(whatsappService.sendTextMessage).toHaveBeenCalledWith(
+        '123456789',
+        reply,
+      );
+      expect(conversationsService.createMessage).toHaveBeenCalledWith(
+        'conv-123',
+        MessageSender.BOT,
+        reply,
+      );
+      expect(result).toBe('EVENT_RECEIVED');
+    });
+
+    it('should not send reply if isBotActive is false', async () => {
       const payload: WhatsAppPayload = {
         entry: [
           {
@@ -96,23 +174,21 @@ describe('WebhookService', () => {
         ],
       };
 
-      const reply = '👋 ¡Hola! Bienvenido a nuestro asistente virtual.';
-      botService.processMessage.mockResolvedValue(reply);
-      whatsappService.sendTextMessage.mockResolvedValue({
-        messaging_product: 'whatsapp',
-        contacts: [{ input: '123456789', wa_id: '123456789' }],
-        messages: [{ id: 'wamid.HBgL' }],
+      conversationsService.findOrCreateByPhone.mockResolvedValue({
+        id: 'conv-123',
+        phoneNumber: '123456789',
+        isBotActive: false,
       });
 
-      // Act
       const result = await service.handleIncoming(payload);
 
-      // Assert
-      expect(botService.processMessage).toHaveBeenCalledWith('hola');
-      expect(whatsappService.sendTextMessage).toHaveBeenCalledWith(
-        '123456789',
-        reply,
+      expect(conversationsService.createMessage).toHaveBeenCalledWith(
+        'conv-123',
+        MessageSender.CUSTOMER,
+        'hola',
       );
+      expect(botService.processMessage).not.toHaveBeenCalled();
+      expect(whatsappService.sendTextMessage).not.toHaveBeenCalled();
       expect(result).toBe('EVENT_RECEIVED');
     });
 
@@ -138,7 +214,6 @@ describe('WebhookService', () => {
     });
 
     it('should not throw if whatsappService fails to send message', async () => {
-      // Arrange
       const payload: WhatsAppPayload = {
         entry: [
           {
@@ -159,15 +234,18 @@ describe('WebhookService', () => {
         ],
       };
 
+      conversationsService.findOrCreateByPhone.mockResolvedValue({
+        id: 'conv-123',
+        phoneNumber: '123456789',
+        isBotActive: true,
+      });
       botService.processMessage.mockResolvedValue('Some reply');
       whatsappService.sendTextMessage.mockRejectedValue(
         new Error('Network error'),
       );
 
-      // Act
       const result = await service.handleIncoming(payload);
 
-      // Assert
       expect(result).toBe('EVENT_RECEIVED');
     });
   });

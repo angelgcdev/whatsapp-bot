@@ -283,32 +283,80 @@ Para considerar cualquier historia técnica o Sprint como **TERMINADO**:
 
 ---
 
-## 🔮 Backlog de Futuras Mejoras (Fase 4: Tiempo Real & Inteligencia Artificial)
+## 🧠 Fase 4: Persistencia, Live Chat en Tiempo Real e Inteligencia Artificial (Sprints 13 al 16)
 
-- [ ] **Persistencia de Conversaciones:** Guardar en SQLite cada mensaje entrante y saliente asociado a un número de teléfono.
-- [ ] **Sincronización en Tiempo Real (WebSockets / SSE):** Conectar el backend con el frontend para que los mensajes de WhatsApp aparezcan en el Inbox al instante sin refrescar la página.
-- [ ] **Acción de Switch Bot en Backend:** Permitir pausar el bot desde la UI para que un agente humano tome el control del chat.
-- [ ] **Integración con LLM (Gemini):** Respuestas inteligentes contextuales con memoria de conversación.
-- [ ] **Mensajes Interactivos:** Soporte para botones y listas de WhatsApp.
-- [ ] **Dashboard de Métricas:** Gráficos de volumen de mensajes y tiempos de respuesta.
+> **Objetivo:** Conectar el backend con base de datos para almacenar conversaciones y mensajes reales de WhatsApp, dotar al Live Chat de sincronización en tiempo real e integrar un modelo de IA (Google Gemini) como asistente conversacional contextual inteligente.
+
+---
+
+### 🔹 Sprint 13: Persistencia de Conversaciones y Mensajes (Prisma 7 + SQLite)
+
+**Objetivo del Sprint:** Modelar y persistir en la base de datos las conversaciones y su historial completo de mensajes (entrantes y salientes).
+
+#### Historias Técnicas:
+
+- [x] **TS-13.1 (Modelado Relacional en Prisma):** Definir entidades `Conversation` y `Message` (relación 1:N, número de teléfono único, `isBotActive`, `sender: customer | bot | agent`).
+- [x] **TS-13.2 (Migración de Base de Datos):** Ejecutar migración con Prisma y regenerar el cliente de base de datos.
+- [x] **TS-13.3 (Conversations Module & Service):** Crear módulo y servicio en NestJS para gestionar conversaciones (`findOrCreateByPhone`, `createMessage`, `getRecentHistory`).
+- [x] **TS-13.4 (Persistencia en Webhook):** Modificar `WebhookService` para que cada mensaje entrante del cliente y cada respuesta del bot se guarden automáticamente en SQLite.
+
+---
+
+### 🔹 Sprint 14: API REST de Conversaciones y Conexión con Frontend
+
+**Objetivo del Sprint:** Exponer la API REST en NestJS y conectar el frontend Angular reemplazando los mocks visuales por los datos reales de la base de datos.
+
+#### Historias Técnicas / UI:
+
+- [ ] **TS-14.1 (Endpoints REST en Backend):** Crear `GET /conversations`, `GET /conversations/:id/messages` y `PATCH /conversations/:id/bot-status` (para activar/pausar el bot por chat).
+- [ ] **TS-14.2 (Envío Manual de Mensajes):** Endpoint `POST /conversations/:id/messages` para que un operador humano envíe mensajes a WhatsApp desde el sistema.
+- [ ] **TS-14.3 (Servicio Angular `ConversationsService`):** Consumir los endpoints con señales reactivas (*signals*) tipadas.
+- [ ] **TS-14.4 (Conexión de la UI):** Conectar `ConversationsPageComponent` para listar contactos reales, cargar su historial y alternar el switch de estado del bot en vivo.
+
+---
+
+### 🔹 Sprint 15: Sincronización en Tiempo Real (Live Inbox)
+
+**Objetivo del Sprint:** Implementar comunicación bidireccional (WebSockets / SSE) para que los nuevos mensajes de WhatsApp aparezcan en la pantalla del operador al instante sin recargar.
+
+#### Historias Técnicas:
+
+- [ ] **TS-15.1 (Gateway / Event Emitter en Backend):** Emitir eventos (`message.received`, `message.sent`, `bot.statusChanged`) al recibir o enviar mensajes.
+- [ ] **TS-15.2 (Listener en Frontend Angular):** Escuchar eventos y actualizar la señal `conversations` y el timeline de mensajes en tiempo real.
+
+---
+
+### 🔹 Sprint 16: Asistente Conversacional Inteligente con IA (Google Gemini API)
+
+**Objetivo del Sprint:** Integrar Google Gemini como motor de respuestas contextuales en lenguaje natural, usando el historial de la conversación como memoria.
+
+#### Historias Técnicas:
+
+- [ ] **TS-16.1 (Setup de Gemini SDK):** Instalar el SDK oficial `@google/genai` y configurar la variable de entorno `GEMINI_API_KEY`.
+- [ ] **TS-16.2 (Servicio `AiService` en NestJS):** Crear servicio de IA configurando System Prompt (rol del bot, tono, reglas del negocio) y formateo de historial contextual.
+- [ ] **TS-16.3 (Estrategia Híbrida en `BotService`):** Si el mensaje no coincide con ningún comando de `BotResponse`, derivar la consulta a Gemini con el contexto de la conversación.
+- [ ] **TS-16.4 (Validación E2E con IA):** Probar desde WhatsApp conversaciones en lenguaje natural y verificar fluidez, memoria y guardado en historial.
 
 ---
 
 ## 📊 Tablero de Progreso
 
-| Sprint        | Enfoque Principal                                     | Estado         |
-| :------------ | :---------------------------------------------------- | :------------- |
-| **Sprint 0**  | Setup de Entorno, Cuenta Meta for Developers & Túnel  | 🟢 Completado  |
-| **Sprint 1**  | Handshake y Verificación del Webhook (`GET /webhook`) | 🟢 Completado  |
-| **Sprint 2**  | Recepción de Mensajes Entrantes (`POST /webhook`)     | 🟢 Completado  |
-| **Sprint 3**  | Envío de Mensajes con Graph API (Echo Bot Funcional)  | 🟢 Completado  |
-| **Sprint 4**  | Lógica de Comandos y Arquitectura Limpia              | 🟢 Completado  |
-| **Sprint 5**  | Pruebas Unitarias y E2E con Mocks                     | 🟢 Completado  |
-| **Sprint 6**  | Persistencia y Modelo Prisma 7 + SQLite en Backend    | 🟢 Completado  |
-| **Sprint 7**  | API REST de Gestión de Respuestas (`/bot-responses`)  | 🟢 Completado  |
-| **Sprint 8**  | Conexión Dinámica de `BotService` con Base de Datos   | 🟢 Completado  |
-| **Sprint 9**  | Frontend Angular - Gestión de Respuestas con Tailwind | 🟢 Completado  |
-| **Sprint 10** | Validación Integral End-to-End (UI ➔ WhatsApp)        | 🟢 Completado  |
-| **Sprint 11** | Arquitectura de Layout Base (Sidebar, Header & Rutas) | 🟢 Completado  |
-| **Sprint 12** | Maquetación UI de Live Conversations (Split-View)     | 🟢 Completado  |
-| **Fase 4**    | Tiempo Real, Persistencia de Chats e IA               | 🟡 Próximo Hito |
+| Sprint        | Enfoque Principal                                     | Estado          |
+| :------------ | :---------------------------------------------------- | :-------------- |
+| **Sprint 0**  | Setup de Entorno, Cuenta Meta for Developers & Túnel  | 🟢 Completado   |
+| **Sprint 1**  | Handshake y Verificación del Webhook (`GET /webhook`) | 🟢 Completado   |
+| **Sprint 2**  | Recepción de Mensajes Entrantes (`POST /webhook`)     | 🟢 Completado   |
+| **Sprint 3**  | Envío de Mensajes con Graph API (Echo Bot Funcional)  | 🟢 Completado   |
+| **Sprint 4**  | Lógica de Comandos y Arquitectura Limpia              | 🟢 Completado   |
+| **Sprint 5**  | Pruebas Unitarias y E2E con Mocks                     | 🟢 Completado   |
+| **Sprint 6**  | Persistencia y Modelo Prisma 7 + SQLite en Backend    | 🟢 Completado   |
+| **Sprint 7**  | API REST de Gestión de Respuestas (`/bot-responses`)  | 🟢 Completado   |
+| **Sprint 8**  | Conexión Dinámica de `BotService` con Base de Datos   | 🟢 Completado   |
+| **Sprint 9**  | Frontend Angular - Gestión de Respuestas con Tailwind | 🟢 Completado   |
+| **Sprint 10** | Validación Integral End-to-End (UI ➔ WhatsApp)        | 🟢 Completado   |
+| **Sprint 11** | Arquitectura de Layout Base (Sidebar, Header & Rutas) | 🟢 Completado   |
+| **Sprint 12** | Maquetación UI de Live Conversations (Split-View)     | 🟢 Completado   |
+| **Sprint 13** | Persistencia de Conversaciones y Mensajes (Prisma 7)  | 🟢 Completado   |
+| **Sprint 14** | API REST de Conversaciones y Conexión Frontend        | 🟡 Próximo Hito |
+| **Sprint 15** | Sincronización en Tiempo Real (Live Inbox)            | ⚪ Pendiente    |
+| **Sprint 16** | Asistente Conversacional Inteligente con IA (Gemini)  | ⚪ Pendiente    |
